@@ -28,7 +28,7 @@ export default new Vuex.Store({
       const currentTodo = state.todos.findIndex(
         item => item.id === todo.id
       )
-      state.todos[currentTodo] = todo
+      state.todos.splice(currentTodo, 1, todo)
     },
 
     completedTodo(state, id) {
@@ -89,7 +89,6 @@ export default new Vuex.Store({
       const completedTodos = state.completed ? sortTodosByDate.filter(todo => todo.completed === true) : sortTodosByDate.filter(todo => todo.completed === false)
       const result = completedTodos
       return result
-      
     },
 
     getSearchWord: state => state.search,

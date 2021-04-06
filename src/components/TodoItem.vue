@@ -1,12 +1,14 @@
 <template>
   <div class="todo-item box">
-    <div class="first-span" v-bind:class='{done: completed}'>
+    <div class="todo-item__block" v-bind:class='{done: completed}'>
       <input v-bind='{checked: completed}' type="checkbox" v-on:change=completedTodo(id)>
       
       <div class="todo-item__title">{{title}}</div>
       <div class="todo-item__date">{{parsedDate}}</div>
     
-      <b-button class="btn" @click="$emit('edit-todo', currentTodo)" icon-right="pencil-outline" />
+      <b-button class="btn" icon-right="pencil-outline"
+        @click="$emit('edit-todo', currentTodo)"
+      />
       <b-button class="btn" @click='delTodo(id)' type="is-danger" icon-right="delete" />
     
     </div>
@@ -21,7 +23,6 @@
 
     data() {
       return {
-        // parsedDate: this.date,
         parsedDate: this.parseDate(this.date),
         currentTodo: {
           id: this.id,
@@ -65,8 +66,8 @@
         const hours = new Date(date).getHours()
         const minutes = (new Date(date).getMinutes()) < 10 ? `0${new Date(date).getMinutes()}` : new Date(date).getMinutes()
         const seconds = (new Date(date).getSeconds()) < 10 ? `0${new Date(date).getSeconds()}` : new Date(date).getSeconds()
-        const d = `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`
-        return d
+        const result = `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`
+        return result
       }
     },
   }
@@ -82,7 +83,7 @@
   margin: 0 0 10px 0;
 }
 
-.first-span {
+.todo-item__block {
   width: 100%;
   height: 40px;
   display: flex;
@@ -101,12 +102,10 @@ input {
   white-space: nowrap;
   overflow: hidden;
   padding: 5px;
-  /* border: 1px solid #000; */
 }
 
 .todo-item__date {
   width: 15%;
-  /* border: 1px solid red; */
   margin: auto 0;
   text-align: center;
   font-size: 13px;

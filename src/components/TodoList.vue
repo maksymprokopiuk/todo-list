@@ -7,7 +7,6 @@
             <div><h1 class="title">Todo App {{getAllTodosLength}}</h1></div>
             <add-todo
               :currentTodoUpdate='currentTodoUpdate'
-              v-on:changed-todo="changedTodo"
             />
           </header>
 
@@ -117,10 +116,6 @@
 
       editTodo(currentTodoUpdate) {
         this.currentTodoUpdate = currentTodoUpdate
-      },
-
-      changedTodo(changedTodo) {
-        console.log('changedTodo', changedTodo)
       },
 
       isSearch() {

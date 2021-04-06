@@ -60,6 +60,7 @@ import { v4 as uuidv4 } from 'uuid'
             }
             this.updateTodo(editedTodo)
             this.title = ''
+            this.currentTodoUpdate.title = ''
           }
         }
       }
