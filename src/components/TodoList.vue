@@ -26,7 +26,7 @@
           
           <ul>
             <li
-              v-for="item of getTodosList"
+              v-for="item of getTodosListPagination"
               :key="item.id"
             >
               <todo-item
@@ -39,6 +39,23 @@
             </li>
           </ul>
           </div>
+          <b-pagination
+            :total="total"
+            v-model="current"
+            :range-before="rangeBefore"
+            :range-after="rangeAfter"
+            :order="order"
+            :size="size"
+            :simple="isSimple"
+            :rounded="isRounded"
+            :per-page="perPage"
+            :icon-prev="prevIcon"
+            :icon-next="nextIcon"
+            aria-next-label="Next page"
+            aria-previous-label="Previous page"
+            aria-page-label="Page"
+            aria-current-label="Current page">
+          </b-pagination>
         </div>
       </div>
     </section>
@@ -60,20 +77,39 @@
 
     data() {
       return {
-        // todosList: [],
         currentTodoUpdate: {},
         searchWord: '',
         sort: '',
         completed: '',
+        // pagination
+        total: null,
+        current: 1,
+        perPage: 10,
+        rangeBefore: 3,
+        rangeAfter: 1,
+        order: '',
+        size: '',
+        isSimple: false,
+        isRounded: false,
+        prevIcon: 'chevron-left',
+        nextIcon: 'chevron-right'
       }
     },
 
     computed: {
       ...mapGetters(['getTodos', 'getCompletedTodos', 'getSearchWord', 'getSortByDate']),
 
-      getTodosList() {
-        return this.getTodos
-      }
+      // pagination
+      getTodosListPagination() {
+        return this.getTodos.slice(
+          this.current * this.perPage - this.perPage,
+          this.current * this.perPage
+        );
+      },
+
+      getTotalItems() {
+        return this.getTodos.length;
+      },
     },
 
     methods: {
@@ -102,11 +138,20 @@
       },
     },
 
+    // pagination
+    watch: {
+      getTotalItems() {
+        this.total = this.getTotalItems;
+      },
+    },
+
     mounted () {
       if (this.getSearchWord) {
         this.searchWord = this.getSearchWord
       }
       this.sort = this.getSortByDate
+      // pagination
+      this.total = this.getTotalItems;
     },
   }
 </script>
