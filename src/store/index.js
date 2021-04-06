@@ -5,7 +5,7 @@ import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  plugins: [createPersistedState()],
+  plugins: [createPersistedState()], // save to localStorage
 
   state: {
     todos: [],
@@ -80,26 +80,20 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    getTodos: state => {
-      // const a = state.todos.filter(todo => todo.title.toLowerCase().includes(state.search.toLowerCase()))
-      // if (state.sortByDate) {
-      //   return a.sort((a, b) => a.date < b.date ? 1 : -1)
-      // } else {
-      //   return a.sort((a, b) => a.date > b.date ? 1 : -1)
-      // }
-      const a = state.todos.filter(todo => 
-        todo.title.toLowerCase().includes(state.search.toLowerCase()))
-        
-      const b = state.sortByDate ? a.sort((a, b) => a.date < b.date ? 1 : -1) : a.sort((a, b) => a.date > b.date ? 1 : -1)
+    getAllTodosLength: state => state.todos.length,
 
-      const c = state.completed ? b.filter(todo => todo.completed === true) : b.filter(todo => todo.completed === false)
-      return c
+    getTodos: state => {
+      const searcTodos = state.todos.filter(todo => 
+        todo.title.toLowerCase().includes(state.search.toLowerCase()))
+      const sortTodosByDate = state.sortByDate ? searcTodos.sort((a, b) => a.date < b.date ? 1 : -1) : searcTodos.sort((a, b) => a.date > b.date ? 1 : -1)
+      const completedTodos = state.completed ? sortTodosByDate.filter(todo => todo.completed === true) : sortTodosByDate.filter(todo => todo.completed === false)
+      const result = completedTodos
+      return result
       
     },
 
     getSearchWord: state => state.search,
+
     getSortByDate: state => state.sortByDate,
-  },
-  modules: {
   }
 })

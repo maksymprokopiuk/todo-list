@@ -4,7 +4,7 @@
       <div class="columns is-mobile">
         <div class="column is-half is-offset-one-quarter">
           <header>
-            <div><h1 class="title">Todo App {{getTodos.length}}</h1></div>
+            <div><h1 class="title">Todo App {{getAllTodosLength}}</h1></div>
             <add-todo
               :currentTodoUpdate='currentTodoUpdate'
               v-on:changed-todo="changedTodo"
@@ -97,14 +97,14 @@
     },
 
     computed: {
-      ...mapGetters(['getTodos', 'getCompletedTodos', 'getSearchWord', 'getSortByDate']),
+      ...mapGetters(['getTodos', 'getCompletedTodos', 'getSearchWord', 'getSortByDate', 'getAllTodosLength']),
 
       // pagination
       getTodosListPagination() {
         return this.getTodos.slice(
           this.current * this.perPage - this.perPage,
           this.current * this.perPage
-        );
+        )
       },
 
       getTotalItems() {
@@ -157,12 +157,6 @@
 </script>
 
 <style scoped>
-.container {
-  border: 1px solid green;
-}
-.section {
-  border: 1px solid red;
-}
 header {
   display: flex;
   justify-content: space-between;
